@@ -30,11 +30,7 @@ namespace NFTGenerator
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, null, true, true);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            DevExpress.XtraTreeList.StyleFormatConditions.TreeListFormatRule treeListFormatRule2 = new DevExpress.XtraTreeList.StyleFormatConditions.TreeListFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleDataBar formatConditionRuleDataBar2 = new DevExpress.XtraEditors.FormatConditionRuleDataBar();
-            this.treeListColumn4 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNewProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,11 +53,11 @@ namespace NFTGenerator
             this.btnDown = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.RarityTable = new System.Windows.Forms.TabPage();
-            this.tlRT = new DevExpress.XtraTreeList.TreeList();
-            this.treeListColumn1 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-            this.treeListColumn2 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-            this.treeListColumn3 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+            this.rarityTreeListView = new BrightIdeasSoftware.TreeListView();
+            this.TraitName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.RarityPercentage = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.TraitId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.NumberOfOccurences = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.btnReloadRarityTable = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -71,6 +67,7 @@ namespace NFTGenerator
             this.pnlImageHolder = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.Generate = new System.Windows.Forms.TabPage();
+            this.outputDataGridView = new System.Windows.Forms.DataGridView();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.btnGenerate = new System.Windows.Forms.ToolStripButton();
             this.btnGenerateCancel = new System.Windows.Forms.ToolStripButton();
@@ -79,9 +76,8 @@ namespace NFTGenerator
             this.btnProjectSettings = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.txtSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.txtStartTokenID = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnUploadIPFS = new System.Windows.Forms.ToolStripButton();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
@@ -99,7 +95,7 @@ namespace NFTGenerator
             this.dlgLoadJSON = new System.Windows.Forms.OpenFileDialog();
             this.dlgSaveJSON = new System.Windows.Forms.SaveFileDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.outputDatalistView = new BrightIdeasSoftware.DataListView();
+            this.imageRenderer1 = new BrightIdeasSoftware.ImageRenderer();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -108,33 +104,16 @@ namespace NFTGenerator
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.RarityTable.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tlRT)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rarityTreeListView)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.Preview.SuspendLayout();
             this.pnlImageHolder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.Generate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputDatalistView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // splashScreenManager1
-            // 
-            splashScreenManager1.ClosingDelay = 500;
-            // 
-            // treeListColumn4
-            // 
-            this.treeListColumn4.Caption = "Rarity %";
-            this.treeListColumn4.FieldName = "RarityPerc";
-            this.treeListColumn4.MaxWidth = 100;
-            this.treeListColumn4.Name = "treeListColumn4";
-            this.treeListColumn4.OptionsColumn.AllowEdit = false;
-            this.treeListColumn4.RowFooterSummary = DevExpress.XtraTreeList.SummaryItemType.Sum;
-            this.treeListColumn4.UnboundType = DevExpress.XtraTreeList.Data.UnboundColumnType.Decimal;
-            this.treeListColumn4.Visible = true;
-            this.treeListColumn4.VisibleIndex = 1;
             // 
             // menuStrip1
             // 
@@ -143,7 +122,7 @@ namespace NFTGenerator
             this.projectToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1157, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1423, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -210,7 +189,7 @@ namespace NFTGenerator
             // 
             this.mnuProjectSettings.Image = global::NFTGenerator.Properties.Resources.settings_icon1;
             this.mnuProjectSettings.Name = "mnuProjectSettings";
-            this.mnuProjectSettings.Size = new System.Drawing.Size(165, 22);
+            this.mnuProjectSettings.Size = new System.Drawing.Size(180, 22);
             this.mnuProjectSettings.Text = "Project &Settings...";
             this.mnuProjectSettings.Click += new System.EventHandler(this.mnuProjectSettings_Click);
             // 
@@ -229,8 +208,8 @@ namespace NFTGenerator
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1157, 687);
-            this.splitContainer1.SplitterDistance = 283;
+            this.splitContainer1.Size = new System.Drawing.Size(1423, 687);
+            this.splitContainer1.SplitterDistance = 347;
             this.splitContainer1.TabIndex = 1;
             // 
             // treeView1
@@ -244,7 +223,7 @@ namespace NFTGenerator
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 1;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(283, 435);
+            this.treeView1.Size = new System.Drawing.Size(347, 435);
             this.treeView1.TabIndex = 1;
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -265,7 +244,7 @@ namespace NFTGenerator
             this.pgProjLay.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pgProjLay.Location = new System.Drawing.Point(0, 460);
             this.pgProjLay.Name = "pgProjLay";
-            this.pgProjLay.Size = new System.Drawing.Size(283, 227);
+            this.pgProjLay.Size = new System.Drawing.Size(347, 227);
             this.pgProjLay.TabIndex = 2;
             // 
             // toolStrip1
@@ -279,7 +258,7 @@ namespace NFTGenerator
             this.btnDown});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(283, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(347, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -351,90 +330,73 @@ namespace NFTGenerator
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(870, 687);
+            this.tabControl1.Size = new System.Drawing.Size(1072, 687);
             this.tabControl1.TabIndex = 0;
             // 
             // RarityTable
             // 
-            this.RarityTable.Controls.Add(this.tlRT);
+            this.RarityTable.Controls.Add(this.rarityTreeListView);
             this.RarityTable.Controls.Add(this.toolStrip2);
             this.RarityTable.Location = new System.Drawing.Point(4, 22);
             this.RarityTable.Name = "RarityTable";
             this.RarityTable.Padding = new System.Windows.Forms.Padding(3);
-            this.RarityTable.Size = new System.Drawing.Size(862, 661);
+            this.RarityTable.Size = new System.Drawing.Size(1064, 661);
             this.RarityTable.TabIndex = 1;
             this.RarityTable.Text = "Rarity Table";
             this.RarityTable.UseVisualStyleBackColor = true;
             // 
-            // tlRT
+            // rarityTreeListView
             // 
-            this.tlRT.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
-            this.treeListColumn1,
-            this.treeListColumn2,
-            this.treeListColumn3,
-            this.treeListColumn4});
-            this.tlRT.Dock = System.Windows.Forms.DockStyle.Fill;
-            treeListFormatRule2.Column = this.treeListColumn4;
-            treeListFormatRule2.Name = "Format0";
-            formatConditionRuleDataBar2.AllowNegativeAxis = false;
-            formatConditionRuleDataBar2.DrawAxis = false;
-            formatConditionRuleDataBar2.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            formatConditionRuleDataBar2.MaximumType = DevExpress.XtraEditors.FormatConditionValueType.Percent;
-            formatConditionRuleDataBar2.MinimumType = DevExpress.XtraEditors.FormatConditionValueType.Percent;
-            formatConditionRuleDataBar2.PredefinedName = "Mint";
-            treeListFormatRule2.Rule = formatConditionRuleDataBar2;
-            this.tlRT.FormatRules.Add(treeListFormatRule2);
-            this.tlRT.Location = new System.Drawing.Point(3, 28);
-            this.tlRT.Name = "tlRT";
-            this.tlRT.OptionsView.ShowRowFooterSummary = true;
-            this.tlRT.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemSpinEdit1});
-            this.tlRT.Size = new System.Drawing.Size(856, 630);
-            this.tlRT.TabIndex = 0;
-            this.tlRT.CellValueChanged += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.tlRT_CellValueChanged);
+            this.rarityTreeListView.AllColumns.Add(this.TraitName);
+            this.rarityTreeListView.AllColumns.Add(this.RarityPercentage);
+            this.rarityTreeListView.AllColumns.Add(this.TraitId);
+            this.rarityTreeListView.AllColumns.Add(this.NumberOfOccurences);
+            this.rarityTreeListView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
+            this.rarityTreeListView.CellEditUseWholeCell = false;
+            this.rarityTreeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TraitName,
+            this.RarityPercentage,
+            this.TraitId,
+            this.NumberOfOccurences});
+            this.rarityTreeListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rarityTreeListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rarityTreeListView.HideSelection = false;
+            this.rarityTreeListView.Location = new System.Drawing.Point(3, 28);
+            this.rarityTreeListView.Name = "rarityTreeListView";
+            this.rarityTreeListView.ShowGroups = false;
+            this.rarityTreeListView.Size = new System.Drawing.Size(1058, 630);
+            this.rarityTreeListView.TabIndex = 2;
+            this.rarityTreeListView.UseCompatibleStateImageBehavior = false;
+            this.rarityTreeListView.View = System.Windows.Forms.View.Details;
+            this.rarityTreeListView.VirtualMode = true;
+            this.rarityTreeListView.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.rarityTreeListView_CellEditFinishing);
             // 
-            // treeListColumn1
+            // TraitName
             // 
-            this.treeListColumn1.Caption = "Trait name";
-            this.treeListColumn1.FieldName = "Name";
-            this.treeListColumn1.Name = "treeListColumn1";
-            this.treeListColumn1.Visible = true;
-            this.treeListColumn1.VisibleIndex = 0;
+            this.TraitName.AspectName = "TraitName";
+            this.TraitName.IsEditable = false;
+            this.TraitName.Text = "Trait Name";
+            this.TraitName.Width = 400;
             // 
-            // treeListColumn2
+            // RarityPercentage
             // 
-            this.treeListColumn2.Caption = "Trait ID";
-            this.treeListColumn2.FieldName = "ID";
-            this.treeListColumn2.MaxWidth = 100;
-            this.treeListColumn2.Name = "treeListColumn2";
-            this.treeListColumn2.OptionsColumn.AllowEdit = false;
-            this.treeListColumn2.RowFooterSummary = DevExpress.XtraTreeList.SummaryItemType.Count;
-            this.treeListColumn2.Visible = true;
-            this.treeListColumn2.VisibleIndex = 2;
+            this.RarityPercentage.AspectName = "RarityPercentage";
+            this.RarityPercentage.IsEditable = false;
+            this.RarityPercentage.Text = "Rarity %";
+            this.RarityPercentage.Width = 80;
             // 
-            // treeListColumn3
+            // TraitId
             // 
-            this.treeListColumn3.Caption = "Rarity";
-            this.treeListColumn3.ColumnEdit = this.repositoryItemSpinEdit1;
-            this.treeListColumn3.FieldName = "Rarity";
-            this.treeListColumn3.MaxWidth = 100;
-            this.treeListColumn3.Name = "treeListColumn3";
-            this.treeListColumn3.RowFooterSummary = DevExpress.XtraTreeList.SummaryItemType.Sum;
-            this.treeListColumn3.Visible = true;
-            this.treeListColumn3.VisibleIndex = 3;
+            this.TraitId.AspectName = "TraitId";
+            this.TraitId.IsEditable = false;
+            this.TraitId.Text = "Trait ID";
+            this.TraitId.Width = 120;
             // 
-            // repositoryItemSpinEdit1
+            // NumberOfOccurences
             // 
-            this.repositoryItemSpinEdit1.AutoHeight = false;
-            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemSpinEdit1.IsFloatValue = false;
-            this.repositoryItemSpinEdit1.MaskSettings.Set("mask", "N00");
-            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
+            this.NumberOfOccurences.AspectName = "NumberOfOccurences";
+            this.NumberOfOccurences.Text = "# of occurences";
+            this.NumberOfOccurences.Width = 100;
             // 
             // toolStrip2
             // 
@@ -445,7 +407,7 @@ namespace NFTGenerator
             this.txtTotalItems});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(856, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(1058, 25);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -467,13 +429,13 @@ namespace NFTGenerator
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(98, 22);
-            this.toolStripLabel1.Text = "Total Item Count:";
+            this.toolStripLabel1.Size = new System.Drawing.Size(74, 22);
+            this.toolStripLabel1.Text = "Total Tokens:";
             // 
             // txtTotalItems
             // 
             this.txtTotalItems.Name = "txtTotalItems";
-            this.txtTotalItems.Size = new System.Drawing.Size(100, 25);
+            this.txtTotalItems.Size = new System.Drawing.Size(75, 25);
             this.txtTotalItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTotalItems_KeyPress);
             this.txtTotalItems.TextChanged += new System.EventHandler(this.txtTotalItems_TextChanged);
             // 
@@ -483,7 +445,7 @@ namespace NFTGenerator
             this.Preview.Location = new System.Drawing.Point(4, 22);
             this.Preview.Name = "Preview";
             this.Preview.Padding = new System.Windows.Forms.Padding(3);
-            this.Preview.Size = new System.Drawing.Size(862, 661);
+            this.Preview.Size = new System.Drawing.Size(1064, 661);
             this.Preview.TabIndex = 0;
             this.Preview.Text = "Preview";
             this.Preview.UseVisualStyleBackColor = true;
@@ -494,7 +456,7 @@ namespace NFTGenerator
             this.pnlImageHolder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlImageHolder.Location = new System.Drawing.Point(3, 3);
             this.pnlImageHolder.Name = "pnlImageHolder";
-            this.pnlImageHolder.Size = new System.Drawing.Size(856, 655);
+            this.pnlImageHolder.Size = new System.Drawing.Size(1058, 655);
             this.pnlImageHolder.TabIndex = 2;
             this.pnlImageHolder.Visible = false;
             // 
@@ -504,22 +466,31 @@ namespace NFTGenerator
             this.pictureBox.Enabled = false;
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(856, 655);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox.Size = new System.Drawing.Size(1058, 655);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 3;
             this.pictureBox.TabStop = false;
             // 
             // Generate
             // 
-            this.Generate.Controls.Add(this.outputDatalistView);
+            this.Generate.Controls.Add(this.outputDataGridView);
             this.Generate.Controls.Add(this.toolStrip3);
             this.Generate.Location = new System.Drawing.Point(4, 22);
             this.Generate.Name = "Generate";
             this.Generate.Padding = new System.Windows.Forms.Padding(3);
-            this.Generate.Size = new System.Drawing.Size(862, 661);
+            this.Generate.Size = new System.Drawing.Size(1064, 661);
             this.Generate.TabIndex = 3;
             this.Generate.Text = "Generate";
             this.Generate.UseVisualStyleBackColor = true;
+            // 
+            // outputDataGridView
+            // 
+            this.outputDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.outputDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputDataGridView.Location = new System.Drawing.Point(3, 28);
+            this.outputDataGridView.Name = "outputDataGridView";
+            this.outputDataGridView.Size = new System.Drawing.Size(1058, 630);
+            this.outputDataGridView.TabIndex = 3;
             // 
             // toolStrip3
             // 
@@ -531,12 +502,11 @@ namespace NFTGenerator
             this.btnProjectSettings,
             this.toolStripSeparator4,
             this.toolStripLabel2,
-            this.txtSearch,
-            this.toolStripSeparator5,
-            this.btnUploadIPFS});
+            this.txtStartTokenID,
+            this.toolStripSeparator5});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(856, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(1058, 25);
             this.toolStrip3.TabIndex = 2;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -588,24 +558,20 @@ namespace NFTGenerator
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(45, 22);
-            this.toolStripLabel2.Text = "Search:";
+            this.toolStripLabel2.Size = new System.Drawing.Size(81, 22);
+            this.toolStripLabel2.Text = "Start token ID:";
             // 
-            // txtSearch
+            // txtStartTokenID
             // 
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 25);
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtStartTokenID.Name = "txtStartTokenID";
+            this.txtStartTokenID.Size = new System.Drawing.Size(50, 25);
+            this.txtStartTokenID.Text = "1";
+            this.txtStartTokenID.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnUploadIPFS
-            // 
-            this.btnUploadIPFS.Name = "btnUploadIPFS";
-            this.btnUploadIPFS.Size = new System.Drawing.Size(23, 22);
             // 
             // imageList
             // 
@@ -647,14 +613,14 @@ namespace NFTGenerator
             this.prg1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 711);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1157, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1423, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusInfo
             // 
             this.statusInfo.Name = "statusInfo";
-            this.statusInfo.Size = new System.Drawing.Size(1142, 17);
+            this.statusInfo.Size = new System.Drawing.Size(1408, 17);
             this.statusInfo.Spring = true;
             this.statusInfo.Text = "...";
             this.statusInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -709,25 +675,11 @@ namespace NFTGenerator
             this.miniToolStrip.Size = new System.Drawing.Size(856, 25);
             this.miniToolStrip.TabIndex = 2;
             // 
-            // outputDatalistView
-            // 
-            this.outputDatalistView.CellEditUseWholeCell = false;
-            this.outputDatalistView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.outputDatalistView.DataSource = null;
-            this.outputDatalistView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputDatalistView.HideSelection = false;
-            this.outputDatalistView.Location = new System.Drawing.Point(3, 28);
-            this.outputDatalistView.Name = "outputDatalistView";
-            this.outputDatalistView.Size = new System.Drawing.Size(856, 630);
-            this.outputDatalistView.TabIndex = 3;
-            this.outputDatalistView.UseCompatibleStateImageBehavior = false;
-            this.outputDatalistView.View = System.Windows.Forms.View.Details;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1157, 733);
+            this.ClientSize = new System.Drawing.Size(1423, 733);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -749,21 +701,19 @@ namespace NFTGenerator
             this.tabControl1.ResumeLayout(false);
             this.RarityTable.ResumeLayout(false);
             this.RarityTable.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tlRT)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rarityTreeListView)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.Preview.ResumeLayout(false);
             this.pnlImageHolder.ResumeLayout(false);
-            this.pnlImageHolder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.Generate.ResumeLayout(false);
             this.Generate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).EndInit();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputDatalistView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -785,10 +735,6 @@ namespace NFTGenerator
         private System.Windows.Forms.ImageList imlFolders;
         private System.Windows.Forms.ToolStripButton btnUp;
         private System.Windows.Forms.ToolStripButton btnDown;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn1;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn2;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn3;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn4;
         private System.Windows.Forms.ToolStripMenuItem mnuNewProject;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveProject;
         private System.Windows.Forms.ToolStripMenuItem mnuOpenProject;
@@ -814,8 +760,6 @@ namespace NFTGenerator
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton btnPicOriginal;
         private System.Windows.Forms.TabPage RarityTable;
-        private DevExpress.XtraTreeList.TreeList tlRT;
-        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton btnReloadRarityTable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -830,12 +774,17 @@ namespace NFTGenerator
         private System.Windows.Forms.ToolStripButton btnProjectSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripTextBox txtSearch;
+        private System.Windows.Forms.ToolStripTextBox txtStartTokenID;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton btnUploadIPFS;
         private System.Windows.Forms.ToolStrip miniToolStrip;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ImageList imageList;
-        private BrightIdeasSoftware.DataListView outputDatalistView;
+        private System.Windows.Forms.DataGridView outputDataGridView;
+        private BrightIdeasSoftware.TreeListView rarityTreeListView;
+        private BrightIdeasSoftware.OLVColumn TraitName;
+        private BrightIdeasSoftware.OLVColumn RarityPercentage;
+        private BrightIdeasSoftware.OLVColumn NumberOfOccurences;
+        private BrightIdeasSoftware.ImageRenderer imageRenderer1;
+        private BrightIdeasSoftware.OLVColumn TraitId;
     }
 }
