@@ -32,18 +32,6 @@ namespace NFTGenerator.Lib
 
         public Dictionary<string, ProjectLayer> Traits { get; set; }
 
-        public string GetLayersString(string id)
-        {
-
-            var fn = System.IO.Path.GetFileNameWithoutExtension(this.FileName);
-            var index = fn.IndexOf("_");
-            if (index > -1) {
-                return $"{fn.Substring(index, fn.Length - index)}_{id}";
-            }
-            return $"{fn}_{id}".TrimEnd('_');
-
-        }
-
         public static List<NFTCollectionItem> CreateCollection(Project proj, int startTokenID)
         {
             List<NFTCollectionItem> files = new List<NFTCollectionItem>();

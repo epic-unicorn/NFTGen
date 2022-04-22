@@ -43,8 +43,7 @@ namespace NFTGenerator
                 var proj = NFTCollectionProject.FromJSON(json);
 
                 generatedFiles = proj.Tokens;
-                outputDataGridView.DataSource = generatedFiles;
-
+                outputListView.SetObjects(generatedFiles);
             }
         }
 
@@ -613,6 +612,8 @@ namespace NFTGenerator
                     ProjectLayer currentLayer = treeViewGroupNode.Tag as ProjectLayer;
                     currentLayer.Rarity = int.Parse(e.NewValue.ToString());
 
+                    double totalPercentage = 0.0;
+
                     // update all children
                     foreach (TraitRarityItem traitRarityItem in traitRarityGroupItemObject.TraitRarityItems)
                     {
@@ -622,8 +623,10 @@ namespace NFTGenerator
                             ProjectLayer childLayer = treeViewChildNode.Tag as ProjectLayer;
                             childLayer.RarityPerc = Math.Round(childLayer.Rarity * 1.0 / currentLayer.Rarity * 100, 2);
                             traitRarityItem.RarityPercentage = childLayer.RarityPerc;
-                        }                                   
+                            totalPercentage += traitRarityItem.RarityPercentage;
+                        }
                     }
+                    currentLayer.RarityPerc = totalPercentage;
                 }
             }
             else if(e.RowObject is TraitRarityItem)
@@ -731,7 +734,8 @@ namespace NFTGenerator
             statusInfo.Text = "Generating images...";
 
             generatedFiles = new List<NFTCollectionItem>();
-            outputDataGridView.DataSource = generatedFiles;
+            outputListView.SetObjects(generatedFiles);
+            
             btnGenerateCancel.Enabled = true;
 
             // create collection with empty nft items
@@ -746,8 +750,8 @@ namespace NFTGenerator
                     {
                         tokenId = item.TokenID,
                         name = item.TokenID.ToString(),
-                        description = "description todo",
-                        image = "ipfs://base/" + item.TokenID.ToString() + ".png",
+                        description = CurrentProject.Settings.TokenMetaDescription,
+                        image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString() + ".png",
                         attributes = new List<Trait>()
                     };
 
@@ -776,7 +780,7 @@ namespace NFTGenerator
                 cts = new CancellationTokenSource();
                 ParallelOptions po = new ParallelOptions();
                 po.CancellationToken = cts.Token;
-                po.MaxDegreeOfParallelism = System.Environment.ProcessorCount;
+                po.MaxDegreeOfParallelism = Environment.ProcessorCount;
                 Parallel.ForEach(allFiles, po,
                     async (item, state) =>
                     {
@@ -843,7 +847,7 @@ namespace NFTGenerator
                 }
             }
 
-            outputDataGridView.DataSource = generatedFiles;
+            outputListView.BuildList(true);
 
             lblGenProgress.Text = $"{processed.Length}/{CurrentProject.TotalItems} ({Math.Round(processed.Length * 1.0 / CurrentProject.TotalItems * 100, 2)}%)";
 
@@ -876,8 +880,7 @@ namespace NFTGenerator
                     }
                 });
 
-                outputDataGridView.DataSource = null;
-                outputDataGridView.DataSource = generatedFiles;
+                outputListView.BuildList(true);
                 statusInfo.Text = "Ready";
             }
         }
@@ -907,6 +910,6 @@ namespace NFTGenerator
             lblGenProgress.Text = "";
         }
 
-        #endregion        
+        #endregion
     }
 }

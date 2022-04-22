@@ -67,7 +67,10 @@ namespace NFTGenerator
             this.pnlImageHolder = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.Generate = new System.Windows.Forms.TabPage();
-            this.outputDataGridView = new System.Windows.Forms.DataGridView();
+            this.outputListView = new BrightIdeasSoftware.ObjectListView();
+            this.tokenID = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.hash = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.timeStamp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.btnGenerate = new System.Windows.Forms.ToolStripButton();
             this.btnGenerateCancel = new System.Windows.Forms.ToolStripButton();
@@ -110,7 +113,7 @@ namespace NFTGenerator
             this.pnlImageHolder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.Generate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -189,7 +192,7 @@ namespace NFTGenerator
             // 
             this.mnuProjectSettings.Image = global::NFTGenerator.Properties.Resources.settings_icon1;
             this.mnuProjectSettings.Name = "mnuProjectSettings";
-            this.mnuProjectSettings.Size = new System.Drawing.Size(180, 22);
+            this.mnuProjectSettings.Size = new System.Drawing.Size(165, 22);
             this.mnuProjectSettings.Text = "Project &Settings...";
             this.mnuProjectSettings.Click += new System.EventHandler(this.mnuProjectSettings_Click);
             // 
@@ -434,6 +437,7 @@ namespace NFTGenerator
             // 
             // txtTotalItems
             // 
+            this.txtTotalItems.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtTotalItems.Name = "txtTotalItems";
             this.txtTotalItems.Size = new System.Drawing.Size(75, 25);
             this.txtTotalItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTotalItems_KeyPress);
@@ -458,7 +462,6 @@ namespace NFTGenerator
             this.pnlImageHolder.Name = "pnlImageHolder";
             this.pnlImageHolder.Size = new System.Drawing.Size(1058, 655);
             this.pnlImageHolder.TabIndex = 2;
-            this.pnlImageHolder.Visible = false;
             // 
             // pictureBox
             // 
@@ -473,7 +476,7 @@ namespace NFTGenerator
             // 
             // Generate
             // 
-            this.Generate.Controls.Add(this.outputDataGridView);
+            this.Generate.Controls.Add(this.outputListView);
             this.Generate.Controls.Add(this.toolStrip3);
             this.Generate.Location = new System.Drawing.Point(4, 22);
             this.Generate.Name = "Generate";
@@ -483,14 +486,46 @@ namespace NFTGenerator
             this.Generate.Text = "Generate";
             this.Generate.UseVisualStyleBackColor = true;
             // 
-            // outputDataGridView
+            // outputListView
             // 
-            this.outputDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.outputDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputDataGridView.Location = new System.Drawing.Point(3, 28);
-            this.outputDataGridView.Name = "outputDataGridView";
-            this.outputDataGridView.Size = new System.Drawing.Size(1058, 630);
-            this.outputDataGridView.TabIndex = 3;
+            this.outputListView.AllColumns.Add(this.tokenID);
+            this.outputListView.AllColumns.Add(this.hash);
+            this.outputListView.AllColumns.Add(this.timeStamp);
+            this.outputListView.CellEditUseWholeCell = false;
+            this.outputListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.tokenID,
+            this.hash,
+            this.timeStamp});
+            this.outputListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.outputListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputListView.HideSelection = false;
+            this.outputListView.Location = new System.Drawing.Point(3, 28);
+            this.outputListView.Name = "outputListView";
+            this.outputListView.Size = new System.Drawing.Size(1058, 630);
+            this.outputListView.TabIndex = 3;
+            this.outputListView.UseCompatibleStateImageBehavior = false;
+            this.outputListView.View = System.Windows.Forms.View.Details;
+            // 
+            // tokenID
+            // 
+            this.tokenID.AspectName = "TokenID";
+            this.tokenID.Groupable = false;
+            this.tokenID.Text = "Token ID";
+            this.tokenID.Width = 76;
+            // 
+            // hash
+            // 
+            this.hash.AspectName = "Hash";
+            this.hash.Groupable = false;
+            this.hash.Text = "Hash";
+            this.hash.Width = 262;
+            // 
+            // timeStamp
+            // 
+            this.timeStamp.AspectName = "GeneratedTimestamp";
+            this.timeStamp.Groupable = false;
+            this.timeStamp.Text = "Timestamp";
+            this.timeStamp.Width = 245;
             // 
             // toolStrip3
             // 
@@ -563,6 +598,7 @@ namespace NFTGenerator
             // 
             // txtStartTokenID
             // 
+            this.txtStartTokenID.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtStartTokenID.Name = "txtStartTokenID";
             this.txtStartTokenID.Size = new System.Drawing.Size(50, 25);
             this.txtStartTokenID.Text = "1";
@@ -709,7 +745,7 @@ namespace NFTGenerator
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.Generate.ResumeLayout(false);
             this.Generate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).EndInit();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -779,12 +815,15 @@ namespace NFTGenerator
         private System.Windows.Forms.ToolStrip miniToolStrip;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ImageList imageList;
-        private System.Windows.Forms.DataGridView outputDataGridView;
         private BrightIdeasSoftware.TreeListView rarityTreeListView;
         private BrightIdeasSoftware.OLVColumn TraitName;
         private BrightIdeasSoftware.OLVColumn RarityPercentage;
         private BrightIdeasSoftware.OLVColumn NumberOfOccurences;
         private BrightIdeasSoftware.ImageRenderer imageRenderer1;
         private BrightIdeasSoftware.OLVColumn TraitId;
+        private BrightIdeasSoftware.ObjectListView outputListView;
+        private BrightIdeasSoftware.OLVColumn tokenID;
+        private BrightIdeasSoftware.OLVColumn hash;
+        private BrightIdeasSoftware.OLVColumn timeStamp;
     }
 }
