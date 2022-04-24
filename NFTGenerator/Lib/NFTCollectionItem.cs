@@ -47,25 +47,25 @@ namespace NFTGenerator.Lib
             //create base collection without traits
             foreach (var layer in baseLayer.Overlays)
             {
-                if (!layer.IsGroup) //ako je overlay
+                if (!layer.IsGroup)
                 {
                     for (int i = 0; i < layer.Rarity; i++)
-                    {
-                        id++;
+                    {                        
                         NFTCollectionItem item = new NFTCollectionItem() { TokenID = id };
                         files.Add(item);
+                        id++;
                     }
                 }
             }
 
-            //random
+            // random
             Random rng = new Random();
             if (proj.Settings.PredictableShuffle)
             {
                 rng = new Random(proj.Settings.ShuffleSeed);
             }
  
-            //traverse all trait groups
+            // traverse all trait groups
             foreach (var group in proj.Overlays.Where(a => a.IsGroup))
             {
 

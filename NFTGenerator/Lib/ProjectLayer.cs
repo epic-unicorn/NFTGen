@@ -15,6 +15,7 @@ namespace NFTGenerator.Lib
         public double RarityPerc { get; set; }
         public string LocalPath { get; set; }
         public bool IsGroup { get; set; }
+        public bool IsRealm { get; set; }
 
         private List<ProjectLayer> overlays = null;
         [Browsable(false)]

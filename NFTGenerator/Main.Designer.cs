@@ -226,7 +226,7 @@ namespace NFTGenerator
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 1;
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(347, 435);
+            this.treeView1.Size = new System.Drawing.Size(347, 344);
             this.treeView1.TabIndex = 1;
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -245,9 +245,9 @@ namespace NFTGenerator
             // pgProjLay
             // 
             this.pgProjLay.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pgProjLay.Location = new System.Drawing.Point(0, 460);
+            this.pgProjLay.Location = new System.Drawing.Point(0, 369);
             this.pgProjLay.Name = "pgProjLay";
-            this.pgProjLay.Size = new System.Drawing.Size(347, 227);
+            this.pgProjLay.Size = new System.Drawing.Size(347, 318);
             this.pgProjLay.TabIndex = 2;
             // 
             // toolStrip1
@@ -376,9 +376,9 @@ namespace NFTGenerator
             // 
             // TraitName
             // 
-            this.TraitName.AspectName = "TraitName";
+            this.TraitName.AspectName = "Name";
             this.TraitName.IsEditable = false;
-            this.TraitName.Text = "Trait Name";
+            this.TraitName.Text = "Name";
             this.TraitName.Width = 400;
             // 
             // RarityPercentage
@@ -390,9 +390,9 @@ namespace NFTGenerator
             // 
             // TraitId
             // 
-            this.TraitId.AspectName = "TraitId";
+            this.TraitId.AspectName = "Id";
             this.TraitId.IsEditable = false;
-            this.TraitId.Text = "Trait ID";
+            this.TraitId.Text = "ID";
             this.TraitId.Width = 120;
             // 
             // NumberOfOccurences

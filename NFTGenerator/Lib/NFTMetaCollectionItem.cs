@@ -10,6 +10,6 @@ namespace NFTGenerator.Lib
         public string name { get; set; }
         public string description { get; set; }
         public string image { get; set; }
-        public List<Trait> attributes { get; set; }
+        public List<TraitAttribute> attributes { get; set; }
     }
 }

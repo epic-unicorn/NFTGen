@@ -99,11 +99,13 @@
     <Compile Include="Lib\NFTCollectionProject.cs" />
     <Compile Include="Lib\NFTMetaCollectionItem.cs" />
     <Compile Include="Lib\Project.cs" />
+    <Compile Include="Lib\Group.cs" />
     <Compile Include="Lib\ProjectLayer.cs" />
     <Compile Include="Lib\ProjectSettings.cs" />
     <Compile Include="Lib\TraitRarityItem.cs" />
-    <Compile Include="Lib\Trait.cs" />
+    <Compile Include="Lib\TraitAttribute.cs" />
     <Compile Include="Lib\TraitRarityGroupItem.cs" />
+    <Compile Include="Lib\TraitRarityRealmItem.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
