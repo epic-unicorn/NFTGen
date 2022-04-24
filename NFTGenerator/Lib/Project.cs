@@ -9,7 +9,6 @@ namespace NFTGenerator.Lib
             ProjectName = "New Project";
             Settings = new ProjectSettings();
             overlays = new List<ProjectLayer>();
-            groups = new List<Group>();
         }
 
         public string ProjectName { get; set; }
@@ -20,16 +19,6 @@ namespace NFTGenerator.Lib
         /// </summary>
         public int TotalItems { get; set; }
         public string LastGeneratedJSON {get;set;}
-
-        private List<Group> groups;
-        public List<Group> Groups
-        {
-            get
-            {
-                return groups;
-            }
-            set { groups = value; }
-        }
 
         public ProjectSettings Settings
         {

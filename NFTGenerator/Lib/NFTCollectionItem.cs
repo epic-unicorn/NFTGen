@@ -36,6 +36,7 @@ namespace NFTGenerator.Lib
         {
             List<NFTCollectionItem> files = new List<NFTCollectionItem>();
 
+
             // first layer is base layer
             ProjectLayer baseLayer = proj.Overlays.Where(a => a.IsGroup && a.Overlays.Count > 0).FirstOrDefault();
 
