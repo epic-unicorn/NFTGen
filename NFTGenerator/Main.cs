@@ -26,8 +26,7 @@ namespace NFTGenerator
             RarityRealmItems = new List<TraitRarityRealmItem>();
             txtTotalItems.Text = CurrentProject.TotalItems.ToString();
 
-
-            // let the listview know that a TraitRarityGroupItem node can expand
+            // let the listview which node can expand
             rarityTreeListView.CanExpandGetter = delegate (object rowObject) {
 
                 if (rowObject is TraitRarityRealmItem) return !ObjectListView.IsEnumerableEmpty((rowObject as TraitRarityRealmItem).TraitRarityGroupItems);
@@ -37,7 +36,7 @@ namespace NFTGenerator
                 return false; 
             };
 
-            // retrieving the "TraitRarityItems" from TraitRarityGroupItems
+            // retrieving items from lists
             rarityTreeListView.ChildrenGetter = delegate (object rowObject) {
 
                 if (rowObject is TraitRarityRealmItem)
@@ -71,7 +70,7 @@ namespace NFTGenerator
             // mnuNewProject_Click(null, null);
         }
 
-        #region ADD FOLDER TO TREEVIEW (recursion)
+        #region ADD FOLDER TO TREEVIEW
 
         private void createTreeNodes(string root)
         {
@@ -87,17 +86,17 @@ namespace NFTGenerator
                 string realmFolderName = Path.GetFileName(realmDir);
                 realmNode = treeView1.Nodes.Add(realmFolderName);
 
-                ProjectLayer realmGroup = new ProjectLayer();
-
-                realmGroup.IsRealm = true;
-                realmGroup.IsGroup = false;
-                realmGroup.LocalPath = realmDir;
-                realmGroup.Name = realmFolderName;
-                realmGroup.ID = $"{(char)(65 + (numOfRealms - 1))}";
+                ProjectLayer realmGroup = new ProjectLayer
+                {
+                    IsRealm = true,
+                    IsGroup = false,
+                    LocalPath = realmDir,
+                    Name = realmFolderName,
+                    ID = "R" + numOfRealms
+                };
                 realmNode.Tag = realmGroup;
                 realmNode.ImageIndex = 0;
                 realmNode.SelectedImageIndex = 1;
-
 
                 string[] groupDirs = Directory.GetDirectories(realmDir);
                 foreach (var groupDir in groupDirs)
@@ -106,11 +105,13 @@ namespace NFTGenerator
                     string groupFolderName = Path.GetFileName(groupDir);
                     groupNode = realmNode.Nodes.Add(groupFolderName);
 
-                    ProjectLayer projectGroup = new ProjectLayer();
-                    projectGroup.IsGroup = true;
-                    projectGroup.LocalPath = groupDir;
-                    projectGroup.Name = groupFolderName;
-                    projectGroup.ID = $"{(char)(65 + (numOfGroups - 1))}";
+                    ProjectLayer projectGroup = new ProjectLayer
+                    {
+                        IsGroup = true,
+                        LocalPath = groupDir,
+                        Name = groupFolderName,
+                        ID = "R" + numOfRealms + "-G" + numOfGroups
+                    };
                     groupNode.Tag = projectGroup;
                     groupNode.ImageIndex = 0;
                     groupNode.SelectedImageIndex = 1;
@@ -126,69 +127,18 @@ namespace NFTGenerator
                         ndFile.ImageIndex = 2;
                         ndFile.SelectedImageIndex = 2;
 
-                        ProjectLayer projectLayer = new ProjectLayer();
-                        projectLayer.IsGroup = false;
-                        projectLayer.LocalPath = fl;
-                        projectLayer.Name = fileName;
-                        projectLayer.ID = $"{(char)(65 + (numOfGroups - 1))}{j}";
+                        ProjectLayer projectLayer = new ProjectLayer
+                        {
+                            IsGroup = false,
+                            LocalPath = fl,
+                            Name = fileName,
+                            ID = "R" + numOfRealms + "-G" + numOfGroups + "-I" + j
+                        };
                         ndFile.Tag = projectLayer;
                     }
                 }
             }
-        }
-
-        private void addNode(string fld, ref int numOfGroups, TreeNode parentNode = null)
-        {
-            string[] dirs = Directory.GetDirectories(fld);
-            if (dirs.Length > 0)
-            {
-                foreach (var dir in dirs)
-                {
-                    TreeNode nd;
-                    numOfGroups++;
-                    string folderName = Path.GetFileName(dir);
-                    if (parentNode == null)
-                    {
-                        nd = treeView1.Nodes.Add(folderName);
-                    }
-                    else
-                    {
-                        nd = parentNode.Nodes.Add(folderName);
-                    }
-
-                    ProjectLayer projectGroup = new ProjectLayer();
-                    projectGroup.IsGroup = true;
-                    projectGroup.LocalPath = dir;
-                    projectGroup.Name = folderName;
-                    projectGroup.ID = $"{(char)(65 + (numOfGroups - 1))}";
-                    nd.Tag = projectGroup;
-                    nd.ImageIndex = 0;
-                    nd.SelectedImageIndex = 1;
-
-                    //recursive
-                    addNode(dir, ref numOfGroups, nd);
-
-                    //add files
-                    string[] fls = Directory.GetFiles(dir, "*.png");
-                    int j = 0;
-                    foreach (var fl in fls)
-                    {
-                        j++;
-                        string fileName = Path.GetFileNameWithoutExtension(fl);
-                        TreeNode ndFile = nd.Nodes.Add(fileName);
-                        ndFile.ImageIndex = 2;
-                        ndFile.SelectedImageIndex = 2;
-
-                        ProjectLayer projectLayer = new ProjectLayer();
-                        projectLayer.IsGroup = false;
-                        projectLayer.LocalPath = fl;
-                        projectLayer.Name = fileName;
-                        projectLayer.ID = $"{(char)(65 + (numOfGroups - 1))}{j}";
-                        ndFile.Tag = projectLayer;
-                    }
-                }
-            }
-        }
+        }        
 
         private void btnAddFolder_Click(object sender, EventArgs e)
         {
@@ -309,10 +259,14 @@ namespace NFTGenerator
             foreach (TreeNode node in nodes)
             {
                 ProjectLayer lay = node.Tag as ProjectLayer;
-                if (lay.IsGroup)
+                if (lay.IsRealm)
                 {
                     overlays.Add(lay);
                 }
+                else if (lay.IsGroup)
+                {
+                    overlays.Add(lay);
+                }                
                 else
                 {
                     ProjectLayer parentLay = node.Parent.Tag as ProjectLayer;
@@ -647,6 +601,11 @@ namespace NFTGenerator
         private void btnReloadRarityTable_Click(object sender, EventArgs e)
         {
             statusInfo.Text = "Loading rarity table...";
+            rarityTreeListView.Items.Clear();
+            rarityTreeListView.Objects = null;
+
+            RarityGroupItems.Clear();
+            RarityRealmItems.Clear();
 
             var nodes = treeView1.Nodes;
             foreach (TreeNode realmNode in nodes)
@@ -686,11 +645,12 @@ namespace NFTGenerator
                             NumberOfOccurences = layChild.Rarity,
                             RarityPercentage = layChild.RarityPerc,
                         });
-                    }                    
+                    }
+                    traitRarityGroupItem.RarityPercentage = traitRarityGroupItem.TraitRarityItems.Sum<TraitRarityItem>(item => item.RarityPercentage);
                 }
                 RarityRealmItems.Add(traitRarityRealmItem);
             }
-            rarityTreeListView.AddObjects(RarityRealmItems);
+            rarityTreeListView.SetObjects(RarityRealmItems);
             statusInfo.Text = "Ready";
         }        
 
@@ -700,11 +660,11 @@ namespace NFTGenerator
             statusInfo.Text = "Computing rarity percentage...";
 
             if (e.RowObject is TraitRarityGroupItem)
-            { 
+            {
                 var traitRarityGroupItemObject = e.RowObject as TraitRarityGroupItem;
                 var treeViewGroupNode = allNodes.FirstOrDefault(node => (node.Tag as ProjectLayer).ID == traitRarityGroupItemObject.Id);
 
-                if(treeViewGroupNode != null)
+                if (treeViewGroupNode != null)
                 {
                     ProjectLayer currentLayer = treeViewGroupNode.Tag as ProjectLayer;
                     currentLayer.Rarity = int.Parse(e.NewValue.ToString());
@@ -726,7 +686,7 @@ namespace NFTGenerator
                     currentLayer.RarityPerc = totalPercentage;
                 }
             }
-            else if(e.RowObject is TraitRarityItem)
+            else if (e.RowObject is TraitRarityItem)
             {
                 var traitRarityItemObject = e.RowObject as TraitRarityItem;
 
@@ -739,9 +699,29 @@ namespace NFTGenerator
                     ProjectLayer parentLayer = treeViewChildNode.Parent.Tag as ProjectLayer;
                     currentLayer.RarityPerc = Math.Round(currentLayer.Rarity * 1.0 / parentLayer.Rarity * 100, 2);
                     traitRarityItemObject.RarityPercentage = currentLayer.RarityPerc;
+
+                    var parentGroupItem = RarityGroupItems.FirstOrDefault((x) => x.Id == parentLayer.ID);
+                    if (parentGroupItem != null)
+                    {
+                        parentGroupItem.RarityPercentage = parentGroupItem.TraitRarityItems.Sum<TraitRarityItem>(item => item.RarityPercentage);
+                    }
                 }
             }
+            else if (e.RowObject is TraitRarityRealmItem)
+            {
+                var traitRarityRealmItemObject = e.RowObject as TraitRarityRealmItem;
+                var treeViewRealmNode = allNodes.FirstOrDefault(node => (node.Tag as ProjectLayer).ID == traitRarityRealmItemObject.Id);
 
+                if (treeViewRealmNode != null)
+                {
+                    ProjectLayer currentLayer = treeViewRealmNode.Tag as ProjectLayer;
+                    currentLayer.Rarity = int.Parse(e.NewValue.ToString());
+                    currentLayer.RarityPerc = Math.Round(currentLayer.Rarity * 1.0 / CurrentProject.TotalItems * 100, 2);
+                    traitRarityRealmItemObject.RarityPercentage = currentLayer.RarityPerc;
+                }
+
+            }
+            
             statusInfo.Text = "Ready";
         }
 

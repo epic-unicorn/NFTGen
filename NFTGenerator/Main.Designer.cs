@@ -354,6 +354,7 @@ namespace NFTGenerator
             this.rarityTreeListView.AllColumns.Add(this.RarityPercentage);
             this.rarityTreeListView.AllColumns.Add(this.TraitId);
             this.rarityTreeListView.AllColumns.Add(this.NumberOfOccurences);
+            this.rarityTreeListView.AlternateRowBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.rarityTreeListView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.rarityTreeListView.CellEditUseWholeCell = false;
             this.rarityTreeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {

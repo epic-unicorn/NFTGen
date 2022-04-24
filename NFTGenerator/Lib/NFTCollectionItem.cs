@@ -36,7 +36,7 @@ namespace NFTGenerator.Lib
         {
             List<NFTCollectionItem> files = new List<NFTCollectionItem>();
 
-            //first layer is base layer
+            // first layer is base layer
             ProjectLayer baseLayer = proj.Overlays.Where(a => a.IsGroup && a.Overlays.Count > 0).FirstOrDefault();
 
             if (baseLayer == null)
@@ -44,7 +44,7 @@ namespace NFTGenerator.Lib
 
             int id = startTokenID;
 
-            //create base collection without traits
+            // create base collection without traits
             foreach (var layer in baseLayer.Overlays)
             {
                 if (!layer.IsGroup)
@@ -69,7 +69,7 @@ namespace NFTGenerator.Lib
             foreach (var group in proj.Overlays.Where(a => a.IsGroup))
             {
 
-                //fill overlays for group
+                // fill overlays for group
                 foreach (var layer in group.Overlays.Where(a => !a.IsGroup))
                 {
 
