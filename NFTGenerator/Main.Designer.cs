@@ -99,6 +99,7 @@ namespace NFTGenerator
             this.dlgSaveJSON = new System.Windows.Forms.SaveFileDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.imageRenderer1 = new BrightIdeasSoftware.ImageRenderer();
+            this.uniqueId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -490,13 +491,15 @@ namespace NFTGenerator
             // outputListView
             // 
             this.outputListView.AllColumns.Add(this.tokenID);
-            this.outputListView.AllColumns.Add(this.hash);
             this.outputListView.AllColumns.Add(this.timeStamp);
+            this.outputListView.AllColumns.Add(this.uniqueId);
+            this.outputListView.AllColumns.Add(this.hash);
             this.outputListView.CellEditUseWholeCell = false;
             this.outputListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.tokenID,
-            this.hash,
-            this.timeStamp});
+            this.timeStamp,
+            this.uniqueId,
+            this.hash});
             this.outputListView.Cursor = System.Windows.Forms.Cursors.Default;
             this.outputListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outputListView.HideSelection = false;
@@ -512,21 +515,21 @@ namespace NFTGenerator
             this.tokenID.AspectName = "TokenID";
             this.tokenID.Groupable = false;
             this.tokenID.Text = "Token ID";
-            this.tokenID.Width = 76;
+            this.tokenID.Width = 70;
             // 
             // hash
             // 
             this.hash.AspectName = "Hash";
             this.hash.Groupable = false;
             this.hash.Text = "Hash";
-            this.hash.Width = 262;
+            this.hash.Width = 409;
             // 
             // timeStamp
             // 
             this.timeStamp.AspectName = "GeneratedTimestamp";
             this.timeStamp.Groupable = false;
             this.timeStamp.Text = "Timestamp";
-            this.timeStamp.Width = 245;
+            this.timeStamp.Width = 150;
             // 
             // toolStrip3
             // 
@@ -712,6 +715,12 @@ namespace NFTGenerator
             this.miniToolStrip.Size = new System.Drawing.Size(856, 25);
             this.miniToolStrip.TabIndex = 2;
             // 
+            // uniqueId
+            // 
+            this.uniqueId.AspectName = "UniqueID";
+            this.uniqueId.Text = "Trait composition";
+            this.uniqueId.Width = 284;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -826,5 +835,6 @@ namespace NFTGenerator
         private BrightIdeasSoftware.OLVColumn tokenID;
         private BrightIdeasSoftware.OLVColumn hash;
         private BrightIdeasSoftware.OLVColumn timeStamp;
+        private BrightIdeasSoftware.OLVColumn uniqueId;
     }
 }
