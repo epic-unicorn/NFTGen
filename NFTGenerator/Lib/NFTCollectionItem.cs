@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -51,6 +50,19 @@ namespace NFTGenerator.Lib
 
         }
 
+        private double rarityScore;
+        public double RarityScore
+        {
+            get
+            {
+                return Math.Round(rarityScore, 2);
+            }
+            set
+            {
+                rarityScore = value;
+            }
+        }
+
         public DateTime GeneratedTimestamp { get; set; }
 
         public string LocalPath { get; set; }
@@ -98,7 +110,7 @@ namespace NFTGenerator.Lib
 
                         var temp_fls = files
                            .Where(x => !x.Traits.ContainsKey(group.ID))
-                           .OrderBy(a => rng.Next()).ToList(); //shuffle
+                           .OrderBy(a => rng.Next()).ToList(); // shuffle
 
                         for (int j = 0; j < layer.Rarity; j++)
                         {
@@ -135,7 +147,7 @@ namespace NFTGenerator.Lib
                 res.Write(this.LocalPath);
             }
 
-            //compute hash
+            // compute hash
             using (System.IO.FileStream stream = System.IO.File.OpenRead(this.LocalPath))
             {
                 var sha = new System.Security.Cryptography.SHA256Managed();

@@ -67,10 +67,6 @@ namespace NFTGenerator
             this.pnlImageHolder = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.Generate = new System.Windows.Forms.TabPage();
-            this.outputListView = new BrightIdeasSoftware.ObjectListView();
-            this.tokenID = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.hash = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.timeStamp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.btnGenerate = new System.Windows.Forms.ToolStripButton();
             this.btnGenerateCancel = new System.Windows.Forms.ToolStripButton();
@@ -99,7 +95,11 @@ namespace NFTGenerator
             this.dlgSaveJSON = new System.Windows.Forms.SaveFileDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.imageRenderer1 = new BrightIdeasSoftware.ImageRenderer();
+            this.tokenID = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.rarityScore = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.uniqueId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.hash = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.outputListView = new BrightIdeasSoftware.ObjectListView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -114,9 +114,9 @@ namespace NFTGenerator
             this.pnlImageHolder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.Generate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -488,49 +488,6 @@ namespace NFTGenerator
             this.Generate.Text = "Generate";
             this.Generate.UseVisualStyleBackColor = true;
             // 
-            // outputListView
-            // 
-            this.outputListView.AllColumns.Add(this.tokenID);
-            this.outputListView.AllColumns.Add(this.timeStamp);
-            this.outputListView.AllColumns.Add(this.uniqueId);
-            this.outputListView.AllColumns.Add(this.hash);
-            this.outputListView.CellEditUseWholeCell = false;
-            this.outputListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.tokenID,
-            this.timeStamp,
-            this.uniqueId,
-            this.hash});
-            this.outputListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.outputListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputListView.HideSelection = false;
-            this.outputListView.Location = new System.Drawing.Point(3, 28);
-            this.outputListView.Name = "outputListView";
-            this.outputListView.Size = new System.Drawing.Size(1058, 630);
-            this.outputListView.TabIndex = 3;
-            this.outputListView.UseCompatibleStateImageBehavior = false;
-            this.outputListView.View = System.Windows.Forms.View.Details;
-            // 
-            // tokenID
-            // 
-            this.tokenID.AspectName = "TokenID";
-            this.tokenID.Groupable = false;
-            this.tokenID.Text = "Token ID";
-            this.tokenID.Width = 70;
-            // 
-            // hash
-            // 
-            this.hash.AspectName = "Hash";
-            this.hash.Groupable = false;
-            this.hash.Text = "Hash";
-            this.hash.Width = 409;
-            // 
-            // timeStamp
-            // 
-            this.timeStamp.AspectName = "GeneratedTimestamp";
-            this.timeStamp.Groupable = false;
-            this.timeStamp.Text = "Timestamp";
-            this.timeStamp.Width = 150;
-            // 
             // toolStrip3
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -715,11 +672,55 @@ namespace NFTGenerator
             this.miniToolStrip.Size = new System.Drawing.Size(856, 25);
             this.miniToolStrip.TabIndex = 2;
             // 
+            // tokenID
+            // 
+            this.tokenID.AspectName = "TokenID";
+            this.tokenID.Groupable = false;
+            this.tokenID.Text = "Token ID";
+            this.tokenID.Width = 70;
+            // 
+            // rarityScore
+            // 
+            this.rarityScore.AspectName = "RarityScore";
+            this.rarityScore.Groupable = false;
+            this.rarityScore.Text = "Rarity score";
+            this.rarityScore.Width = 148;
+            // 
             // uniqueId
             // 
             this.uniqueId.AspectName = "UniqueID";
             this.uniqueId.Text = "Trait composition";
-            this.uniqueId.Width = 284;
+            this.uniqueId.Width = 398;
+            // 
+            // hash
+            // 
+            this.hash.AspectName = "Hash";
+            this.hash.Groupable = false;
+            this.hash.Text = "Hash";
+            this.hash.Width = 437;
+            // 
+            // outputListView
+            // 
+            this.outputListView.AllColumns.Add(this.tokenID);
+            this.outputListView.AllColumns.Add(this.rarityScore);
+            this.outputListView.AllColumns.Add(this.uniqueId);
+            this.outputListView.AllColumns.Add(this.hash);
+            this.outputListView.CellEditUseWholeCell = false;
+            this.outputListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.tokenID,
+            this.rarityScore,
+            this.uniqueId,
+            this.hash});
+            this.outputListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.outputListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputListView.HideSelection = false;
+            this.outputListView.Location = new System.Drawing.Point(3, 28);
+            this.outputListView.Name = "outputListView";
+            this.outputListView.ShowGroups = false;
+            this.outputListView.Size = new System.Drawing.Size(1058, 630);
+            this.outputListView.TabIndex = 3;
+            this.outputListView.UseCompatibleStateImageBehavior = false;
+            this.outputListView.View = System.Windows.Forms.View.Details;
             // 
             // Main
             // 
@@ -755,11 +756,11 @@ namespace NFTGenerator
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.Generate.ResumeLayout(false);
             this.Generate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).EndInit();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outputListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -833,8 +834,8 @@ namespace NFTGenerator
         private BrightIdeasSoftware.OLVColumn TraitId;
         private BrightIdeasSoftware.ObjectListView outputListView;
         private BrightIdeasSoftware.OLVColumn tokenID;
-        private BrightIdeasSoftware.OLVColumn hash;
-        private BrightIdeasSoftware.OLVColumn timeStamp;
+        private BrightIdeasSoftware.OLVColumn rarityScore;
         private BrightIdeasSoftware.OLVColumn uniqueId;
+        private BrightIdeasSoftware.OLVColumn hash;
     }
 }

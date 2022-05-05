@@ -47,7 +47,9 @@ namespace NFTGenerator
                     return null;
                 else
                     throw new ArgumentException("x");
-            };            
+            };
+
+            outputListView.SortGroupItemsByPrimaryColumn = false;
         }
 
         private void LoadGenerated(string path)
@@ -845,6 +847,16 @@ namespace NFTGenerator
                 }
             });
 
+            
+            await Task.Run(() =>
+            {
+                // [Rarity Score for a Trait Value] = 1 / ([Number of Items with that Trait Value] / [Total Number of Items in Collection])
+                foreach (var token in allFiles)
+                {
+                    token.RarityScore = Math.Round(token.Traits.Sum(x => 1 / ((double)x.Value.Rarity / (double)allFiles.Count)), 0);
+                }
+            });
+
             prg1.Minimum = 0;
             prg1.Maximum = allFiles.Count;
             prg1.Value = 0;
@@ -924,7 +936,7 @@ namespace NFTGenerator
                 }
             }
 
-            outputListView.BuildList(true);
+            outputListView.BuildList(false);
 
             lblGenProgress.Text = $"{processed.Length}/{CurrentProject.TotalItems} ({Math.Round(processed.Length * 1.0 / CurrentProject.TotalItems * 100, 2)}%)";
 
@@ -955,7 +967,7 @@ namespace NFTGenerator
                         var tokenMetaJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(tokenMeta, Newtonsoft.Json.Formatting.Indented);
                         File.WriteAllText(Path.Combine(outputPath, $"{tokenMeta.tokenId}.json"), tokenMetaJsonString);
                     }
-                });
+                });                
 
                 outputListView.BuildList(true);
                 statusInfo.Text = "Ready";
