@@ -11,5 +11,15 @@ namespace NFTGenerator.Lib
         public string description { get; set; }
         public string image { get; set; }
         public List<TraitAttribute> attributes { get; set; }
+
+        public static NFTMetaCollectionItem FromJSON(string json)
+        {
+            return JsonConvert.DeserializeObject<NFTMetaCollectionItem>(json);
+        }
+
+        public static string ToJSON(NFTMetaCollectionItem item)
+        {
+            return JsonConvert.SerializeObject(item, Formatting.Indented);
+        }
     }
 }

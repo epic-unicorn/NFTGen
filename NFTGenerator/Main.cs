@@ -72,6 +72,42 @@ namespace NFTGenerator
             // mnuNewProject_Click(null, null);
         }
 
+        private void toolStripButtonUpdateMeta_Click(object sender, EventArgs e)
+        {
+            if(generatedFiles.Count > 0)
+            {
+                statusInfo.Text = "Update meta data...";
+                foreach (var generatedFile in generatedFiles)
+                {
+                    var json = File.ReadAllText(generatedFile.MetaFilePath);
+                    var nftMetaItem = NFTMetaCollectionItem.FromJSON(json);
+                    
+                    nftMetaItem.image = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenImageBaseAddress + "/" + generatedFile.TokenID : CurrentProject.Settings.HiddenMetaAddress;
+                    nftMetaItem.description = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaDescription : CurrentProject.Settings.TokenMetaHiddenDescription;
+
+                    string output = NFTMetaCollectionItem.ToJSON(nftMetaItem);
+                    File.WriteAllText(generatedFile.MetaFilePath, output);
+
+                    generatedFile.MetaAddress = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaBaseAddress + "/" + generatedFile.TokenID : CurrentProject.Settings.HiddenMetaAddress;                    
+                }
+
+                // update final json
+                var finalJSONFile = Path.Combine(CurrentProject.Settings.GetOutputPath(CurrentProject), $"{CurrentProject.ProjectName}_db.json");
+                statusInfo.Text = $"Updating final JSON file [{finalJSONFile}]...";
+
+                NFTCollectionProject nftProject = new NFTCollectionProject(CurrentProject.ProjectName);
+                nftProject.Tokens = generatedFiles;
+
+                var finaljson = nftProject.ToJSON();
+                CurrentProject.LastGeneratedJSON = finalJSONFile;
+
+                File.WriteAllText(finalJSONFile, finaljson);               
+
+                outputListView.BuildList(false);
+                statusInfo.Text = "Ready";
+            }
+        }
+
         #region ADD FOLDER TO TREEVIEW
 
         private void createTreeNodes(string root)
@@ -829,10 +865,18 @@ namespace NFTGenerator
                     {
                         tokenId = item.TokenID,
                         name = item.TokenID.ToString(),
-                        description = CurrentProject.Settings.TokenMetaDescription,
-                        image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString() + ".png",
-                        attributes = new List<TraitAttribute>()
+                        description = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaDescription : CurrentProject.Settings.TokenMetaHiddenDescription,
+                        image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString(),
+                        attributes = new List<TraitAttribute>()                        
                     };
+                    
+                    // set meta path
+                    if (CurrentProject.Settings.CollectionRevealed) {
+                        item.MetaAddress = CurrentProject.Settings.TokenMetaBaseAddress + "/" + item.TokenID.ToString();
+                    }
+                    else {
+                        item.MetaAddress = CurrentProject.Settings.HiddenMetaAddress;
+                    }
 
                     foreach (var trait in item.Traits)
                     {
@@ -853,7 +897,7 @@ namespace NFTGenerator
                 // [Rarity Score for a Trait Value] = 1 / ([Number of Items with that Trait Value] / [Total Number of Items in Collection])
                 foreach (var token in allFiles)
                 {
-                    token.RarityScore = Math.Round(token.Traits.Sum(x => 1 / ((double)x.Value.Rarity / (double)allFiles.Count)), 0);
+                    token.RarityScore = token.Traits.Sum(x => 1 / ((double)x.Value.Rarity / (double)allFiles.Count));
                 }
             });
 
@@ -953,23 +997,27 @@ namespace NFTGenerator
                 statusInfo.Text = $"Saving final JSON file [{finalJSONFile}]...";
 
                 NFTCollectionProject nftProject = new NFTCollectionProject(CurrentProject.ProjectName);
+
+                // update and save meta
+                foreach (var tokenMeta in metaList)
+                {
+                    var tokenMetaJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(tokenMeta, Newtonsoft.Json.Formatting.Indented);
+                    string metaPath = Path.Combine(outputPath, $"{tokenMeta.tokenId}.json");
+                    generatedFiles.First(x => x.TokenID == tokenMeta.tokenId).MetaFilePath = metaPath;
+                    File.WriteAllText(metaPath, tokenMetaJsonString);
+                }
+
                 nftProject.Tokens = generatedFiles;
 
                 var json = nftProject.ToJSON();
-
                 CurrentProject.LastGeneratedJSON = finalJSONFile;
 
                 await Task.Run(() =>
-                {
-                    File.WriteAllText(finalJSONFile, json);
-                    foreach (var tokenMeta in metaList)
-                    {
-                        var tokenMetaJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(tokenMeta, Newtonsoft.Json.Formatting.Indented);
-                        File.WriteAllText(Path.Combine(outputPath, $"{tokenMeta.tokenId}.json"), tokenMetaJsonString);
-                    }
+                {                    
+                    File.WriteAllText(finalJSONFile, json);                    
                 });                
 
-                outputListView.BuildList(true);
+                outputListView.BuildList(false);
                 statusInfo.Text = "Ready";
             }
         }
@@ -999,6 +1047,6 @@ namespace NFTGenerator
             lblGenProgress.Text = "";
         }
 
-        #endregion
+        #endregion        
     }
 }

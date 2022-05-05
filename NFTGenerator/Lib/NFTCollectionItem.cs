@@ -67,6 +67,10 @@ namespace NFTGenerator.Lib
 
         public string LocalPath { get; set; }
 
+        public string MetaAddress { get; set; }
+
+        public string MetaFilePath { get; set; }
+
         public Dictionary<string, ProjectLayer> Traits { get; set; }
 
         public static List<NFTCollectionItem> CreateCollection(Project proj, int startTokenID)
