@@ -13,6 +13,8 @@ namespace NFTGenerator.Lib
             Traits = new Dictionary<string, ProjectLayer>();
         }
 
+        public string Realm { get; set; }
+
         public int TokenID { get; set; }
 
         public string Hash { get; set; }        
@@ -90,7 +92,7 @@ namespace NFTGenerator.Lib
                     {
                         for (int i = 0; i < layer.Rarity; i++)
                         {
-                            NFTCollectionItem item = new NFTCollectionItem() { TokenID = id };
+                            NFTCollectionItem item = new NFTCollectionItem() { TokenID = id, Realm = realm.Name };
                             files.Add(item);
                             id++;
                         }

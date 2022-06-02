@@ -878,6 +878,12 @@ namespace NFTGenerator
                         item.MetaAddress = CurrentProject.Settings.HiddenMetaAddress;
                     }
 
+                    t.attributes.Add(new TraitAttribute
+                    {
+                        trait_type = "Realm",
+                        value = item.Realm
+                    });
+
                     foreach (var trait in item.Traits)
                     {
                         t.attributes.Add(new TraitAttribute
