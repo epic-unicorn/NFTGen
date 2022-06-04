@@ -78,7 +78,6 @@ namespace NFTGenerator.Lib
         public static List<NFTCollectionItem> CreateCollection(Project proj, int startTokenID)
         {
             List<NFTCollectionItem> files = new List<NFTCollectionItem>();
-            int id = startTokenID;
 
             foreach (var realm in proj.Overlays)
             {
@@ -92,9 +91,8 @@ namespace NFTGenerator.Lib
                     {
                         for (int i = 0; i < layer.Rarity; i++)
                         {
-                            NFTCollectionItem item = new NFTCollectionItem() { TokenID = id, Realm = realm.Name };
+                            NFTCollectionItem item = new NFTCollectionItem() { Realm = realm.Name };
                             files.Add(item);
-                            id++;
                         }
                     }
                 }
@@ -129,7 +127,16 @@ namespace NFTGenerator.Lib
                 }
             }
 
-            return files;
+            var shuffled = files.OrderBy(x => Guid.NewGuid()).ToList();
+            int id = startTokenID;
+
+            foreach(var item in shuffled)
+            {
+                item.TokenID = id;
+                id++;
+            }
+
+            return shuffled;
         }
 
         public void GenerateImage(Project proj)

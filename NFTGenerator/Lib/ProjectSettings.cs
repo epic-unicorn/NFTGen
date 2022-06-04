@@ -22,32 +22,32 @@ namespace NFTGenerator.Lib
 
         [Description("Description which every token will have in their meta data file."),
             DisplayName("Token Meta Description"),
-            Category("Output")]
+            Category("MetaData")]
         public string TokenMetaDescription { get; set; }
 
         [Description("Description which every token will have in their meta data file, when the collection is not yet revealed."),
             DisplayName("Token Meta Hidden Description"),
-            Category("Output")]
+            Category("MetaData")]
         public string TokenMetaHiddenDescription { get; set; }
 
         [Description("Base url for each Token image location."),
             DisplayName("Token Image Base Address"),
-            Category("Output")]
+            Category("MetaData")]
         public string TokenImageBaseAddress { get; set; }
 
         [Description("Base url for each Token Meta location."),
             DisplayName("Token Meta Base Address"),
-            Category("Output")]
+            Category("MetaData")]
         public string TokenMetaBaseAddress { get; set; }
 
         [Description("Meta address for not revealed token."),
             DisplayName("Hidden Meta Address"),
-            Category("Output")]
+            Category("MetaData")]
         public string HiddenMetaAddress { get; set; }
 
         [Description("Check wether the collection is revealed, official meta address will be published."),
          DisplayName("Collection Revealed"),
-         Category("Output")]
+         Category("Collection")]
         public bool CollectionRevealed { get; set; }
 
         [Description("Path to output directory where images will be generated"),
