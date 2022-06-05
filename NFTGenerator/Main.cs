@@ -3,6 +3,7 @@ using NFTGenerator.Lib;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace NFTGenerator
                     throw new ArgumentException("x");
             };
 
-            outputListView.SortGroupItemsByPrimaryColumn = false;
+            outputListView.SortGroupItemsByPrimaryColumn = false;            
         }
 
         private void LoadGenerated(string path)
@@ -61,6 +62,7 @@ namespace NFTGenerator
 
                 generatedFiles = proj.Tokens;
                 outputListView.SetObjects(generatedFiles);
+                previewObjectListView.SetObjects(generatedFiles);
             }
         }
 
@@ -368,7 +370,6 @@ namespace NFTGenerator
                     {
                         treeView1.SelectedNode = treeView1.Nodes[0];
                         treeView1.SelectedNode.Expand();
-                        treeView1_AfterSelect(treeView1, new TreeViewEventArgs(treeView1.SelectedNode));
                     }
 
                     statusInfo.Text = "Project loaded...";
@@ -410,56 +411,6 @@ namespace NFTGenerator
             treeView1.Nodes.Remove(treeView1.SelectedNode);
             btnReloadRarityTable_Click(null, null);
             statusInfo.Text = "Ready";
-        }
-
-        // action after treeview select
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            btnAddFile.Enabled = btnUp.Enabled = btnDown.Enabled = btnRemoveFolder.Enabled = e.Node != null;
-            ProjectLayer lay = e.Node.Tag as ProjectLayer;
-
-            pgProjLay.SelectedObject = lay;
-
-            if (lay.IsGroup || lay.IsRealm)
-            {
-                /*GalleryItemGroup group = new GalleryItemGroup();
-                group.Caption = lay.Name;
-
-                foreach (TreeNode tn in e.Node.Nodes)
-                {
-                    Lib.ProjectLayer overlay = tn.Tag as Lib.ProjectLayer;
-                    if (!overlay.IsGroup)
-                    {
-                        if (File.Exists(overlay.LocalPath))
-                        {
-                            var gi = new GalleryItem(Image.FromFile(overlay.LocalPath).GetThumbnailImage(100, 100, null, new IntPtr()), overlay.Name, "");
-                            gi.Tag = tn;
-                            group.Items.Add(gi);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Selected [{overlay.LocalPath}] image does not anymore exist.", "Image does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            break;
-                        }
-                    }
-                }*/
-            }
-            else
-            {
-                ProjectLayer overlay = e.Node.Tag as ProjectLayer;
-                if (File.Exists(overlay.LocalPath))
-                {
-                    pictureBox.Image = Image.FromFile(overlay.LocalPath);
-                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else
-                {
-                    MessageBox.Show($"Selected [{overlay.LocalPath}] image does not anymore exist.", "Image does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            statusInfo.Text = "Ready";
-
         }
 
         // button move item up the tree
@@ -850,6 +801,7 @@ namespace NFTGenerator
 
             generatedFiles = new List<NFTCollectionItem>();
             outputListView.SetObjects(generatedFiles);
+            previewObjectListView.SetObjects(generatedFiles);
             
             btnGenerateCancel.Enabled = true;
 
@@ -1024,6 +976,7 @@ namespace NFTGenerator
                 });                
 
                 outputListView.BuildList(false);
+                previewObjectListView.BuildList(false);
                 statusInfo.Text = "Ready";
             }
         }
@@ -1053,6 +1006,24 @@ namespace NFTGenerator
             lblGenProgress.Text = "";
         }
 
-        #endregion        
+        #endregion
+
+        private void previewObjectListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            NFTCollectionItem token = (sender as ObjectListView).SelectedObject as NFTCollectionItem;
+            if (token != null)
+            {
+                pictureBox1.Image = new Bitmap(token.LocalPath);
+            }
+        }
+
+        // action after treeview select
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            btnAddFile.Enabled = btnUp.Enabled = btnDown.Enabled = btnRemoveFolder.Enabled = e.Node != null;
+            ProjectLayer lay = e.Node.Tag as ProjectLayer;
+
+            pgProjLay.SelectedObject = lay;
+        }
     }
 }
