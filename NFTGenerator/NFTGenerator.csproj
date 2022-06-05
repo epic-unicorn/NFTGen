@@ -99,7 +99,6 @@
     <Compile Include="Lib\NFTCollectionProject.cs" />
     <Compile Include="Lib\NFTMetaCollectionItem.cs" />
     <Compile Include="Lib\Project.cs" />
-    <Compile Include="Lib\Group.cs" />
     <Compile Include="Lib\ProjectLayer.cs" />
     <Compile Include="Lib\ProjectSettings.cs" />
     <Compile Include="Lib\TraitRarityItem.cs" />
