@@ -816,7 +816,7 @@ namespace NFTGenerator
                     NFTMetaCollectionItem t = new NFTMetaCollectionItem
                     {
                         tokenId = item.TokenID,
-                        name = item.TokenID.ToString(),
+                        name = String.Concat(CurrentProject.ProjectName, " #", item.TokenID.ToString()), 
                         description = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaDescription : CurrentProject.Settings.TokenMetaHiddenDescription,
                         image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString(),
                         attributes = new List<TraitAttribute>()                        

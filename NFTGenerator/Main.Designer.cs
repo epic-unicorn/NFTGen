@@ -446,6 +446,7 @@ namespace NFTGenerator
             // 
             // txtTotalItems
             // 
+            this.txtTotalItems.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtTotalItems.Name = "txtTotalItems";
             this.txtTotalItems.Size = new System.Drawing.Size(75, 25);
             this.txtTotalItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTotalItems_KeyPress);
@@ -595,6 +596,7 @@ namespace NFTGenerator
             // 
             // txtStartTokenID
             // 
+            this.txtStartTokenID.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtStartTokenID.Name = "txtStartTokenID";
             this.txtStartTokenID.Size = new System.Drawing.Size(50, 25);
             this.txtStartTokenID.Text = "1";
