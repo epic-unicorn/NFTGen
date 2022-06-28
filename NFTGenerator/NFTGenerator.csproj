@@ -102,8 +102,9 @@
     <Compile Include="Lib\ProjectLayer.cs" />
     <Compile Include="Lib\ProjectSettings.cs" />
     <Compile Include="Lib\TraitRarityItem.cs" />
-    <Compile Include="Lib\Trait.cs" />
+    <Compile Include="Lib\TraitAttribute.cs" />
     <Compile Include="Lib\TraitRarityGroupItem.cs" />
+    <Compile Include="Lib\TraitRarityRealmItem.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,24 +154,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\settings-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\settings-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\disk-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\folder-page-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\script-code-red-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\arrow-refresh-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -181,6 +164,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\add-folder.png" />
+    <Content Include="Resources\new.png" />
+    <Content Include="Resources\open.png" />
+    <Content Include="Resources\play.png" />
+    <Content Include="Resources\refresh.png" />
+    <Content Include="Resources\save.png" />
+    <Content Include="Resources\settings.png" />
+    <Content Include="Resources\stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

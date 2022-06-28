@@ -2,9 +2,9 @@
 {
     public class TraitRarityItem
     {
-        public string TraitName { get; set; }
+        public string Name { get; set; }
         public double RarityPercentage { get; set; } 
-        public string TraitId { get; set; }
+        public string Id { get; set; }
         public int NumberOfOccurences { get; set; }
 
     }

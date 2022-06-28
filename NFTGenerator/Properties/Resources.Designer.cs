@@ -63,9 +63,9 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_refresh_icon {
+        internal static System.Drawing.Bitmap _new {
             get {
-                object obj = ResourceManager.GetObject("arrow-refresh-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap disk_icon {
+        internal static System.Drawing.Bitmap add_folder {
             get {
-                object obj = ResourceManager.GetObject("disk-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("add_folder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap folder_page_icon {
+        internal static System.Drawing.Bitmap open {
             get {
-                object obj = ResourceManager.GetObject("folder-page-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap script_code_red_icon {
+        internal static System.Drawing.Bitmap play {
             get {
-                object obj = ResourceManager.GetObject("script-code-red-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("play", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap settings_icon {
+        internal static System.Drawing.Bitmap refresh {
             get {
-                object obj = ResourceManager.GetObject("settings-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,29 @@ namespace NFTGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap settings_icon1 {
+        internal static System.Drawing.Bitmap save {
             get {
-                object obj = ResourceManager.GetObject("settings-icon1", resourceCulture);
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings {
+            get {
+                object obj = ResourceManager.GetObject("settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stop {
+            get {
+                object obj = ResourceManager.GetObject("stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

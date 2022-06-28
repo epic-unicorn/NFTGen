@@ -47,7 +47,7 @@ namespace NFTGenerator
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 397);
+            this.panel1.Location = new System.Drawing.Point(0, 513);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(672, 39);
             this.panel1.TabIndex = 1;
@@ -132,7 +132,7 @@ namespace NFTGenerator
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgSettings.Location = new System.Drawing.Point(15, 140);
             this.pgSettings.Name = "pgSettings";
-            this.pgSettings.Size = new System.Drawing.Size(645, 251);
+            this.pgSettings.Size = new System.Drawing.Size(645, 367);
             this.pgSettings.TabIndex = 7;
             this.pgSettings.ToolbarVisible = false;
             // 
@@ -140,7 +140,7 @@ namespace NFTGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 436);
+            this.ClientSize = new System.Drawing.Size(672, 552);
             this.Controls.Add(this.pgSettings);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.nudTotalItems);

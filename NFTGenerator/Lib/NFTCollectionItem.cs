@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +12,8 @@ namespace NFTGenerator.Lib
         {
             Traits = new Dictionary<string, ProjectLayer>();
         }
+
+        public string Realm { get; set; }
 
         public int TokenID { get; set; }
 
@@ -26,9 +27,51 @@ namespace NFTGenerator.Lib
             }
         }
 
+        public string UniqueID
+        {
+            get
+            {
+                string fn = $"{TokenID.ToString("0000")}_";
+                foreach (KeyValuePair<string, ProjectLayer> item in Traits)
+                {
+                    fn += $"{item.Value.ID}_";
+                }
+                return fn.TrimEnd('_');
+            }
+        }
+
+        public string GetLayersString(string id)
+        {
+            var fn = System.IO.Path.GetFileNameWithoutExtension(UniqueID);
+            var index = fn.IndexOf("_");
+            if (index > -1)
+            {
+                return $"{fn.Substring(index, fn.Length - index)}_{id}";
+            }
+            return $"{fn}_{id}".TrimEnd('_');
+
+        }
+
+        private double rarityScore;
+        public double RarityScore
+        {
+            get
+            {
+                return Math.Round(rarityScore, 2);
+            }
+            set
+            {
+                rarityScore = value;
+            }
+        }
+
         public DateTime GeneratedTimestamp { get; set; }
 
         public string LocalPath { get; set; }
+
+        public string MetaAddress { get; set; }
+
+        public string MetaFilePath { get; set; }
 
         public Dictionary<string, ProjectLayer> Traits { get; set; }
 
@@ -36,61 +79,65 @@ namespace NFTGenerator.Lib
         {
             List<NFTCollectionItem> files = new List<NFTCollectionItem>();
 
-            //first layer is base layer
-            ProjectLayer baseLayer = proj.Overlays.Where(a => a.IsGroup && a.Overlays.Count > 0).FirstOrDefault();
-
-            if (baseLayer == null)
-                return files;
-
-            int id = startTokenID;
-
-            //create base collection without traits
-            foreach (var layer in baseLayer.Overlays)
+            foreach (var realm in proj.Overlays)
             {
-                if (!layer.IsGroup) //ako je overlay
+                // first layer is base layer
+                ProjectLayer baseLayer = realm.Overlays.Where(a => a.IsGroup && a.Overlays.Count > 0).FirstOrDefault();
+
+                // create base collection without traits
+                foreach (var layer in baseLayer.Overlays)
                 {
-                    for (int i = 0; i < layer.Rarity; i++)
+                    if (!layer.IsGroup)
                     {
-                        id++;
-                        NFTCollectionItem item = new NFTCollectionItem() { TokenID = id };
-                        files.Add(item);
+                        for (int i = 0; i < layer.Rarity; i++)
+                        {
+                            NFTCollectionItem item = new NFTCollectionItem() { Realm = realm.Name };
+                            files.Add(item);
+                        }
                     }
                 }
-            }
 
-            //random
-            Random rng = new Random();
-            if (proj.Settings.PredictableShuffle)
-            {
-                rng = new Random(proj.Settings.ShuffleSeed);
-            }
- 
-            //traverse all trait groups
-            foreach (var group in proj.Overlays.Where(a => a.IsGroup))
-            {
+                // random
+                Random rng = new Random();
+                if (proj.Settings.PredictableShuffle)
+                {
+                    rng = new Random(proj.Settings.ShuffleSeed);
+                }
 
-                //fill overlays for group
-                foreach (var layer in group.Overlays.Where(a => !a.IsGroup))
+                // traverse all trait groups
+                foreach (var group in realm.Overlays.Where(a => a.IsGroup))
                 {
 
-                    var temp_fls = files
-                       .Where(x => !x.Traits.ContainsKey(group.ID))
-                       .OrderBy(a => rng.Next()).ToList(); //shuffle
-
-                    for (int j = 0; j < layer.Rarity; j++)
+                    // fill overlays for group
+                    foreach (var layer in group.Overlays.Where(a => !a.IsGroup))
                     {
-                        if (temp_fls.Count > j) //&& !files.Exists(y => y.FileName.Contains(temp_fls[j].GetLayersString(layer.ID)))
+
+                        var temp_fls = files
+                           .Where(x => !x.Traits.ContainsKey(group.ID))
+                           .OrderBy(a => rng.Next()).ToList(); // shuffle
+
+                        for (int j = 0; j < layer.Rarity; j++)
                         {
-                            temp_fls[j].Traits.Add(group.ID, layer);
+                            if (temp_fls.Count > j) //&& !files.Exists(y => y.FileName.Contains(temp_fls[j].GetLayersString(layer.ID)))
+                            {
+                                temp_fls[j].Traits.Add(group.ID, layer);
+                            }
                         }
                     }
                 }
             }
 
-            return files;
+            var shuffled = files.OrderBy(x => Guid.NewGuid()).ToList();
+            int id = startTokenID;
+
+            foreach(var item in shuffled)
+            {
+                item.TokenID = id;
+                id++;
+            }
+
+            return shuffled;
         }
-
-
 
         public void GenerateImage(Project proj)
         {
@@ -106,14 +153,14 @@ namespace NFTGenerator.Lib
                 res.FilterType = proj.Settings.GetMagickResizeAlgorithm();
                 res.Resize(proj.Settings.OutputSize.Width, proj.Settings.OutputSize.Height);
 
-                //path to generated image
+                // path to generated image
                 this.LocalPath = System.IO.Path.Combine(proj.Settings.GetOutputPath(proj), this.FileName + ".png");
                 this.GeneratedTimestamp = DateTime.Now;
 
                 res.Write(this.LocalPath);
             }
 
-            //compute hash
+            // compute hash
             using (System.IO.FileStream stream = System.IO.File.OpenRead(this.LocalPath))
             {
                 var sha = new System.Security.Cryptography.SHA256Managed();
@@ -136,7 +183,7 @@ namespace NFTGenerator.Lib
                         images.Add(trait.Value.LocalPath);
                         cancellationToken.ThrowIfCancellationRequested();
                     }
-                    //apply resize to each layer
+                    // apply resize to each layer
                     foreach (var item in images)
                     {
                         item.Resize(proj.Settings.OutputSize.Width, proj.Settings.OutputSize.Height);
@@ -148,14 +195,14 @@ namespace NFTGenerator.Lib
                         res.FilterType = proj.Settings.GetMagickResizeAlgorithm();
                         // res.Resize(proj.Settings.OutputSize.Width, proj.Settings.OutputSize.Height);
 
-                        //path to generated image
+                        // path to generated image
                         this.LocalPath = System.IO.Path.Combine(proj.Settings.GetOutputPath(proj), this.FileName + ".png");
                         this.GeneratedTimestamp = DateTime.Now;
 
                         res.Write(this.LocalPath);
                     }
 
-                    //compute hash
+                    // compute hash
                     using (System.IO.FileStream stream = System.IO.File.OpenRead(this.LocalPath))
                     {
                         var sha = new System.Security.Cryptography.SHA256Managed();

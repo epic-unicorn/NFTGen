@@ -19,11 +19,11 @@ namespace NFTGenerator.Lib
         /// </summary>
         public int TotalItems { get; set; }
         public string LastGeneratedJSON {get;set;}
+
         public ProjectSettings Settings
         {
             get; set;
         }
-
 
         private List<ProjectLayer> overlays = null;
         public List<ProjectLayer> Overlays
