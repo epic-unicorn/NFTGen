@@ -50,7 +50,7 @@ namespace NFTGenerator
                     throw new ArgumentException("x");
             };
 
-            outputListView.SortGroupItemsByPrimaryColumn = false;            
+            outputListView.SortGroupItemsByPrimaryColumn = false;
         }
 
         private void LoadGenerated(string path)
@@ -1024,6 +1024,22 @@ namespace NFTGenerator
             ProjectLayer lay = e.Node.Tag as ProjectLayer;
 
             pgProjLay.SelectedObject = lay;
+        }
+
+        private void rarityTreeListView_FormatCell(object sender, FormatCellEventArgs e)
+        {
+            if (e.ColumnIndex == RarityPercentage.Index)
+            {
+                TraitRarityGroupItem item = e.Model as TraitRarityGroupItem;
+                if (item != null && item.RarityPercentage > 100)
+                {
+                    e.SubItem.BackColor = Color.Red;
+                }
+                else
+                {
+                    e.SubItem.BackColor = Color.White;
+                }
+            }
         }
     }
 }

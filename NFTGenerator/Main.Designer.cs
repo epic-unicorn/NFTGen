@@ -198,7 +198,7 @@ namespace NFTGenerator
             // 
             this.mnuProjectSettings.Image = global::NFTGenerator.Properties.Resources.settings;
             this.mnuProjectSettings.Name = "mnuProjectSettings";
-            this.mnuProjectSettings.Size = new System.Drawing.Size(165, 22);
+            this.mnuProjectSettings.Size = new System.Drawing.Size(180, 22);
             this.mnuProjectSettings.Text = "Project &Settings...";
             this.mnuProjectSettings.Click += new System.EventHandler(this.mnuProjectSettings_Click);
             // 
@@ -378,10 +378,12 @@ namespace NFTGenerator
             this.rarityTreeListView.ShowGroups = false;
             this.rarityTreeListView.Size = new System.Drawing.Size(1058, 630);
             this.rarityTreeListView.TabIndex = 2;
+            this.rarityTreeListView.UseCellFormatEvents = true;
             this.rarityTreeListView.UseCompatibleStateImageBehavior = false;
             this.rarityTreeListView.View = System.Windows.Forms.View.Details;
             this.rarityTreeListView.VirtualMode = true;
             this.rarityTreeListView.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.rarityTreeListView_CellEditFinishing);
+            this.rarityTreeListView.FormatCell += new System.EventHandler<BrightIdeasSoftware.FormatCellEventArgs>(this.rarityTreeListView_FormatCell);
             // 
             // TraitName
             // 
