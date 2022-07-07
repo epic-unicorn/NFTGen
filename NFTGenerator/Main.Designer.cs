@@ -82,6 +82,7 @@ namespace NFTGenerator
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonUpdateMeta = new System.Windows.Forms.ToolStripButton();
             this.Preview = new System.Windows.Forms.TabPage();
+            this.propertyGridTokenPreview = new System.Windows.Forms.PropertyGrid();
             this.previewObjectListView = new BrightIdeasSoftware.ObjectListView();
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -198,7 +199,7 @@ namespace NFTGenerator
             // 
             this.mnuProjectSettings.Image = global::NFTGenerator.Properties.Resources.settings;
             this.mnuProjectSettings.Name = "mnuProjectSettings";
-            this.mnuProjectSettings.Size = new System.Drawing.Size(180, 22);
+            this.mnuProjectSettings.Size = new System.Drawing.Size(165, 22);
             this.mnuProjectSettings.Text = "Project &Settings...";
             this.mnuProjectSettings.Click += new System.EventHandler(this.mnuProjectSettings_Click);
             // 
@@ -448,7 +449,6 @@ namespace NFTGenerator
             // 
             // txtTotalItems
             // 
-            this.txtTotalItems.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtTotalItems.Name = "txtTotalItems";
             this.txtTotalItems.Size = new System.Drawing.Size(75, 25);
             this.txtTotalItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTotalItems_KeyPress);
@@ -598,7 +598,6 @@ namespace NFTGenerator
             // 
             // txtStartTokenID
             // 
-            this.txtStartTokenID.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtStartTokenID.Name = "txtStartTokenID";
             this.txtStartTokenID.Size = new System.Drawing.Size(50, 25);
             this.txtStartTokenID.Text = "1";
@@ -621,6 +620,7 @@ namespace NFTGenerator
             // 
             // Preview
             // 
+            this.Preview.Controls.Add(this.propertyGridTokenPreview);
             this.Preview.Controls.Add(this.previewObjectListView);
             this.Preview.Controls.Add(this.pictureBox1);
             this.Preview.Location = new System.Drawing.Point(4, 22);
@@ -630,6 +630,15 @@ namespace NFTGenerator
             this.Preview.TabIndex = 0;
             this.Preview.Text = "Preview";
             this.Preview.UseVisualStyleBackColor = true;
+            // 
+            // propertyGridTokenPreview
+            // 
+            this.propertyGridTokenPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGridTokenPreview.Location = new System.Drawing.Point(337, 353);
+            this.propertyGridTokenPreview.Name = "propertyGridTokenPreview";
+            this.propertyGridTokenPreview.Size = new System.Drawing.Size(724, 305);
+            this.propertyGridTokenPreview.TabIndex = 9;
             // 
             // previewObjectListView
             // 
@@ -684,7 +693,7 @@ namespace NFTGenerator
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(337, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(724, 655);
+            this.pictureBox1.Size = new System.Drawing.Size(724, 344);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
@@ -911,5 +920,6 @@ namespace NFTGenerator
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn realm;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PropertyGrid propertyGridTokenPreview;
     }
 }

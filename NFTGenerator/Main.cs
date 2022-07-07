@@ -61,6 +61,9 @@ namespace NFTGenerator
                 var proj = NFTCollectionProject.FromJSON(json);
 
                 generatedFiles = proj.Tokens;
+
+                BuildMetaList(generatedFiles);
+
                 outputListView.SetObjects(generatedFiles);
                 previewObjectListView.SetObjects(generatedFiles);
             }
@@ -808,56 +811,11 @@ namespace NFTGenerator
             // create collection with empty nft items
             allFiles = NFTCollectionItem.CreateCollection(CurrentProject, int.Parse(txtStartTokenID.Text));
 
-            metaList = new List<NFTMetaCollectionItem>();
-            await Task.Run(() =>
-            {
-                foreach (NFTCollectionItem item in allFiles)
-                {
-                    NFTMetaCollectionItem t = new NFTMetaCollectionItem
-                    {
-                        tokenId = item.TokenID,
-                        name = String.Concat(CurrentProject.ProjectName, " #", item.TokenID.ToString()), 
-                        description = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaDescription : CurrentProject.Settings.TokenMetaHiddenDescription,
-                        image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString(),
-                        attributes = new List<TraitAttribute>()                        
-                    };
-                    
-                    // set meta path
-                    if (CurrentProject.Settings.CollectionRevealed) {
-                        item.MetaAddress = CurrentProject.Settings.TokenMetaBaseAddress + "/" + item.TokenID.ToString();
-                    }
-                    else {
-                        item.MetaAddress = CurrentProject.Settings.HiddenMetaAddress;
-                    }
+            // build up list of meta data for all tokens
+            BuildMetaList(allFiles);
 
-                    t.attributes.Add(new TraitAttribute
-                    {
-                        trait_type = "Realm",
-                        value = item.Realm
-                    });
-
-                    foreach (var trait in item.Traits)
-                    {
-                        t.attributes.Add(new TraitAttribute
-                        {
-                            trait_type = trait.Key,
-                            value = trait.Value.Name
-                        });
-                    }
-
-                    metaList.Add(t);
-                }
-            });
-
-            
-            await Task.Run(() =>
-            {
-                // [Rarity Score for a Trait Value] = 1 / ([Number of Items with that Trait Value] / [Total Number of Items in Collection])
-                foreach (var token in allFiles)
-                {
-                    token.RarityScore = token.Traits.Sum(x => 1 / ((double)x.Value.Rarity / (double)allFiles.Count));
-                }
-            });
+            // calculate rarity scores now all meta data is available
+            CalculateRarityScores(allFiles);
 
             prg1.Minimum = 0;
             prg1.Maximum = allFiles.Count;
@@ -882,7 +840,7 @@ namespace NFTGenerator
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine(ex.Message);
+                            Debug.WriteLine(ex.Message);
                         }
                         //if (po.CancellationToken.IsCancellationRequested)
                         //{
@@ -981,6 +939,64 @@ namespace NFTGenerator
             }
         }
 
+        private async void CalculateRarityScores(List<NFTCollectionItem> collection)
+        {
+            await Task.Run(() =>
+            {
+                // Rarity score calculation : [Rarity Score for a Trait Value] = 1 / ([Number of Items with that Trait Value] / [Total Number of Items in Collection])
+                foreach (NFTCollectionItem token in collection)
+                {
+                    token.RarityScore = token.Traits.Sum(x => 1 / ((double)x.Value.Rarity / (double)allFiles.Count));
+                }
+            });
+        }
+
+        private async void BuildMetaList(List<NFTCollectionItem> collection)
+        {
+            metaList = new List<NFTMetaCollectionItem>();
+            await Task.Run(() =>
+            {
+                foreach (NFTCollectionItem item in collection)
+                {
+                    NFTMetaCollectionItem t = new NFTMetaCollectionItem
+                    {
+                        tokenId = item.TokenID,
+                        name = String.Concat(CurrentProject.ProjectName, " #", item.TokenID.ToString()),
+                        description = CurrentProject.Settings.CollectionRevealed ? CurrentProject.Settings.TokenMetaDescription : CurrentProject.Settings.TokenMetaHiddenDescription,
+                        image = CurrentProject.Settings.TokenImageBaseAddress + "/" + item.TokenID.ToString(),
+                        attributes = new List<TraitAttribute>()
+                    };
+
+                    // set meta path
+                    if (CurrentProject.Settings.CollectionRevealed)
+                    {
+                        item.MetaAddress = CurrentProject.Settings.TokenMetaBaseAddress + "/" + item.TokenID.ToString();
+                    }
+                    else
+                    {
+                        item.MetaAddress = CurrentProject.Settings.HiddenMetaAddress;
+                    }
+
+                    t.attributes.Add(new TraitAttribute
+                    {
+                        trait_type = "Realm",
+                        value = item.Realm
+                    });
+
+                    foreach (var trait in item.Traits)
+                    {
+                        t.attributes.Add(new TraitAttribute
+                        {
+                            trait_type = trait.Key,
+                            value = trait.Value.Name
+                        });
+                    }
+
+                    metaList.Add(t);
+                }
+            });
+        }
+
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             //search in grid
@@ -1014,6 +1030,7 @@ namespace NFTGenerator
             if (token != null)
             {
                 pictureBox1.Image = new Bitmap(token.LocalPath);
+                propertyGridTokenPreview.SelectedObject = metaList.FirstOrDefault(x => x.tokenId == token.TokenID);
             }
         }
 

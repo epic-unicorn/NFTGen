@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpandableCollectionPropertyDescriptor.cs" />
     <Compile Include="Lib\NFTCollectionItem.cs" />
     <Compile Include="Lib\NFTCollectionProject.cs" />
     <Compile Include="Lib\NFTMetaCollectionItem.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Lib\TraitAttribute.cs" />
     <Compile Include="Lib\TraitRarityGroupItem.cs" />
     <Compile Include="Lib\TraitRarityRealmItem.cs" />
+    <Compile Include="ListConverter.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
