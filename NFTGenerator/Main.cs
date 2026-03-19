@@ -69,14 +69,6 @@ namespace NFTGenerator
             }
         }
 
-        private void Main_Shown(object sender, EventArgs e)
-        {
-            //show new project dialog on first load
-
-            // TODO disabled for testing
-            // mnuNewProject_Click(null, null);
-        }
-
         private void toolStripButtonUpdateMeta_Click(object sender, EventArgs e)
         {
             if(generatedFiles.Count > 0)
@@ -203,10 +195,7 @@ namespace NFTGenerator
 
         private void LoadFolder(string fn)
         {
-            int numOfFolders = 0;
-
             createTreeNodes(fn);
-            //addNode(fn, ref numOfFolders);
             btnReloadRarityTable_Click(null, null);
         }
 
@@ -218,7 +207,7 @@ namespace NFTGenerator
         {
             statusInfo.Text = "Saving project data...";
             dlgSave.FileName = this.CurrentProject.ProjectName;
-            if (string.IsNullOrEmpty(currentFileName) || !System.IO.File.Exists(currentFileName))
+            if (string.IsNullOrEmpty(currentFileName) || !File.Exists(currentFileName))
             {
                 if (dlgSave.ShowDialog(this) == DialogResult.OK)
                 {
@@ -250,8 +239,7 @@ namespace NFTGenerator
         }
 
         private void mnuExit_Click(object sender, EventArgs e)
-        {
-            //exit
+        {           
             this.Close();
         }
 
@@ -363,7 +351,6 @@ namespace NFTGenerator
                     CurrentProject = Project.Load(currentFileName);
                     LoadProject();
                     btnReloadRarityTable_Click(null, null);
-                    //calcPerc();
                     LoadGenerated(CurrentProject.LastGeneratedJSON);
 
                     txtTotalItems.Text = this.CurrentProject.TotalItems.ToString();
@@ -487,54 +474,35 @@ namespace NFTGenerator
 
         private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            // Move the dragged node when the left mouse button is used.
             if (e.Button == MouseButtons.Left)
             {
                 DoDragDrop(e.Item, DragDropEffects.Move);
             }
-
-            // Copy the dragged node when the right mouse button is used.
             else if (e.Button == MouseButtons.Right)
             {
                 DoDragDrop(e.Item, DragDropEffects.Copy);
             }
         }
 
-        // Set the target drop effect to the effect 
-        // specified in the ItemDrag event handler.
         private void treeView1_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = e.AllowedEffect;
         }
 
-        // Select the node under the mouse pointer to indicate the 
-        // expected drop location.
         private void treeView1_DragOver(object sender, DragEventArgs e)
         {
-            // Retrieve the client coordinates of the mouse position.
             Point targetPoint = treeView1.PointToClient(new Point(e.X, e.Y));
-
-            // Select the node at the mouse position.
             treeView1.SelectedNode = treeView1.GetNodeAt(targetPoint);
         }
 
         private void treeView1_DragDrop(object sender, DragEventArgs e)
         {
-            // Retrieve the client coordinates of the drop location.
             Point targetPoint = treeView1.PointToClient(new Point(e.X, e.Y));
-
-            // Retrieve the node at the drop location.
             TreeNode targetNode = treeView1.GetNodeAt(targetPoint);
-
-            // Retrieve the node that was dragged.
             TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
 
-            // Confirm that the node at the drop location is not 
-            // the dragged node or a descendant of the dragged node.
             if (!draggedNode.Equals(targetNode) && !ContainsNode(draggedNode, targetNode))
             {
-                // If it is a move operation, remove the node from its current 
-                // location and add it to the node at the drop location.
                 if (e.Effect == DragDropEffects.Move)
                 {
                     draggedNode.Remove();
@@ -548,8 +516,6 @@ namespace NFTGenerator
                     }
                 }
 
-                // If it is a copy operation, clone the dragged node 
-                // and add it to the node at the drop location.
                 else if (e.Effect == DragDropEffects.Copy)
                 {
                     if (targetNode != null)
@@ -562,8 +528,7 @@ namespace NFTGenerator
                     }
                 }
 
-                // Expand the node at the location 
-                // to show the dropped node.
+
                 if (targetNode != null)
                 {
                     targetNode.Expand();
@@ -577,13 +542,8 @@ namespace NFTGenerator
         // or ancestor of a second node.
         private bool ContainsNode(TreeNode node1, TreeNode node2)
         {
-            // Check the parent node of the second node.
             if (node2 == null || node2.Parent == null) return false;
             if (node2.Parent.Equals(node1)) return true;
-
-            // If the parent node is not null or equal to the first node, 
-            // call the ContainsNode method recursively using the parent of 
-            // the second node.
             return ContainsNode(node1, node2.Parent);
         }
         #endregion
@@ -717,7 +677,6 @@ namespace NFTGenerator
             statusInfo.Text = "Ready";
         }
 
-        // set total number of tokens
         private void txtTotalItems_TextChanged(object sender, EventArgs e)
         {
             this.CurrentProject.TotalItems = int.Parse(txtTotalItems.Text);
@@ -725,7 +684,6 @@ namespace NFTGenerator
 
         private void txtTotalItems_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // allow numbers only
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
@@ -842,22 +800,6 @@ namespace NFTGenerator
                         {
                             Debug.WriteLine(ex.Message);
                         }
-                        //if (po.CancellationToken.IsCancellationRequested)
-                        //{
-                        //    state.Break();
-                        //}
-                        //else
-                        //{
-                        //    try
-                        //    {
-                        //        await item.GenerateImageAsync(CurrentProject, cts.Token);
-
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        System.Diagnostics.Debug.WriteLine(ex.Message);
-                        //    }
-                        //}
                     }
                 );
             });
@@ -997,23 +939,8 @@ namespace NFTGenerator
             });
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            //search in grid
-            //var view = ((DevExpress.XtraGrid.Views.Base.ColumnView)outputGrid.DefaultView);
-            //if (!string.IsNullOrEmpty(txtSearch.Text))
-            //{
-            //    view.ActiveFilterCriteria = DevExpress.Data.Filtering.CriteriaOperator.Parse("Contains([FileName], '" + txtSearch.Text + "')");
-            //}
-            //else
-            //{
-            //    view.ActiveFilter.Clear();
-            //}
-        }
-
         private void btnGenerateCancel_Click(object sender, EventArgs e)
         {
-            // cancel build
             cts.Cancel();
             prg1.Visible = false;
             btnGenerate.Enabled = true;
@@ -1034,7 +961,6 @@ namespace NFTGenerator
             }
         }
 
-        // action after treeview select
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             btnAddFile.Enabled = btnUp.Enabled = btnDown.Enabled = btnRemoveFolder.Enabled = e.Node != null;

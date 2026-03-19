@@ -363,3 +363,8 @@ MigrationBackup/
 FodyWeavers.xsd
 /NFTAG/Output
 *.bak
+
+# Generated demo assets and output
+DemoNFTAssets/
+output/
+Retro_Demo_Project.nftc

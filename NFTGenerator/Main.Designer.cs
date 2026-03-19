@@ -601,7 +601,6 @@ namespace NFTGenerator
             this.txtStartTokenID.Name = "txtStartTokenID";
             this.txtStartTokenID.Size = new System.Drawing.Size(50, 25);
             this.txtStartTokenID.Text = "1";
-            this.txtStartTokenID.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // toolStripSeparator5
             // 
@@ -813,7 +812,6 @@ namespace NFTGenerator
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NFT Image Generator";
-            this.Shown += new System.EventHandler(this.Main_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
